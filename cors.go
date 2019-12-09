@@ -161,6 +161,7 @@ func New(options Options) *Cors {
 				break
 			}
 		}
+		c.logf("  CORS Initialised with %v", c.allowedHeaders)
 	}
 
 	// Allowed Methods
@@ -285,6 +286,7 @@ func (c *Cors) handlePreflight(w http.ResponseWriter, r *http.Request) {
 	}
 	reqHeaders := parseHeaderList(r.Header.Get("Access-Control-Request-Headers"))
 	if !c.areHeadersAllowed(reqHeaders) {
+		c.logf("  Allowed headers are: %v", c.allowedHeaders)
 		c.logf("  Preflight aborted: headers '%v' not allowed", reqHeaders)
 		return
 	}
